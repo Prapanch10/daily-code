@@ -2,37 +2,35 @@ name: Daily Problem
 
 on:
   schedule:
-    - cron: "0 15 * * *"   # Runs daily at 8:30 PM IST
-  workflow_dispatch:        # Allows manual run
+    - cron: "0 15 * * *"
+  workflow_dispatch:
 
 jobs:
   daily-task:
     runs-on: ubuntu-latest
 
-    steps:
-      # Step 1: Checkout repo
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    permissions:
+      contents: write
 
-      # Step 2: Setup Python (important for reliability)
-      - name: Setup Python
-        uses: actions/setup-python@v4
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      # Step 3: Run your script
-      - name: Generate daily problem file
-        run: python generate.py
+      - run: python generate.py
 
-      # Step 4: Commit & push changes safely
-      - name: Commit and push changes
-        run: |
+      - run: |
           git config --global user.name "Prapanch"
           git config --global user.email "prapanchr555@gmail.com"
-
           git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Daily auto problem: $(date)"
+            git pull origin main --rebase
+            git push
+          fi
 
-          # Commit only if there are changes
-          git diff --cached --quiet || git commit -m "Daily auto problem: $(date)"
-
-          git push
+   
