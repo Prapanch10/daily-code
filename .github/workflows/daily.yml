@@ -1,0 +1,38 @@
+name: Daily Problem
+
+on:
+  schedule:
+    - cron: "0 15 * * *"   # Runs daily at 8:30 PM IST
+  workflow_dispatch:        # Allows manual run
+
+jobs:
+  daily-task:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Python (important for reliability)
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      # Step 3: Run your script
+      - name: Generate daily problem file
+        run: python generate.py
+
+      # Step 4: Commit & push changes safely
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "Prapanch"
+          git config --global user.email "prapanchr555@gmail.com"
+
+          git add .
+
+          # Commit only if there are changes
+          git diff --cached --quiet || git commit -m "Daily auto problem: $(date)"
+
+          git push
