@@ -1,3 +1,4 @@
 # Problem: Find duplicate in array
 
 # Write your solution here
+def duplicates()
