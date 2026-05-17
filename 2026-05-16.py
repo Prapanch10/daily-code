@@ -7,3 +7,4 @@ def duplicates(mylist):
     if i not in seen:
       mylist.remove(i)
     seen.add(i)
+  return mylist
