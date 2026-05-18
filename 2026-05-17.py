@@ -7,3 +7,4 @@ def reverse(name):
     new_name += name[i]
   return new_name
   name = "hello"
+  print(reverse(name))
