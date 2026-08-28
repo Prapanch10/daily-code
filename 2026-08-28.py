@@ -1,3 +1,3 @@
-# Problem: Find duplicate in array
+# Problem: Check palindrome string
 
 # Write your solution here
