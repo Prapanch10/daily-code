@@ -1,3 +1,3 @@
-# Problem: Find duplicate in array
+# Problem: Count vowels in string
 
 # Write your solution here
